@@ -1,0 +1,14 @@
+export enum UserRole {
+  USER = 'USER',
+  MANAGER = 'MANAGER',
+  PERSONAL = 'PERSONAL',
+}
+
+export enum UserGender {
+  MALE = 'MALE',
+  FEMALE = 'FEMALE',
+  NON_BINARY = 'NON_BINARY',
+  TRANSGENDER = 'TRANSGENDER',
+  PREFER_NOT_TO_SAY = 'PREFER_NOT_TO_SAY',
+  OTHER = 'OTHER',
+}
