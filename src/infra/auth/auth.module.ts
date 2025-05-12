@@ -6,7 +6,7 @@ import { base64Encode } from 'src/utils/base64-encode';
 
 import { EnvModule } from '../env/env.module';
 import { EnvService } from '../env/env.service';
-import { JwtAuthGuard } from './jwt-auth-guard';
+import { JwtAuthGuard } from './jwt-auth.guard';
 import { JwtStrategy } from './jwt.strategy';
 import { PermissionsGuard } from './permission.guard';
 

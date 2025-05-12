@@ -1,10 +1,17 @@
-import { ApiBadRequestResponse, ApiBearerAuth, ApiNotFoundResponse, ApiOperation, ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsString } from 'class-validator';
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiNotFoundResponse,
+  ApiOperation,
+  ApiProperty,
+  ApiPropertyOptional,
+} from '@nestjs/swagger';
+import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
 
 import { ApiPaginatedResponse } from '../pagination.dto';
 import { SwaggerBadRequestDto, SwaggerResourceNotFoundDto } from '../swagger.dto';
 
-export class FindAllByUserIdDto {
+export class FindWorkoutsHistoryByUserIdResponseDto {
   @ApiProperty({ type: () => String, description: 'Unique identifier of the session' })
   id: string;
 
@@ -34,13 +41,28 @@ export class FindAllByUserIdDto {
 
   @ApiProperty({ type: () => String, description: 'Unique identifier of the workout' })
   workoutId: string;
+
+  @ApiProperty({ type: Number, description: 'Total load (sum of maxWeight across all logs)' })
+  @IsNumber()
+  totalLoad: number;
+
+  @ApiProperty({ type: Number, description: 'Total number of exercises performed in the session' })
+  @IsNumber()
+  totalExercises: number;
 }
 
-export const SwaggerFindAllByUserIdDto = () => {
+export class FindWorkoutsHistoryByUserIdQueryDto {
+  @ApiPropertyOptional({ type: String || null, nullable: true, description: 'The workoutId reference to search' })
+  @IsOptional()
+  @IsString()
+  query?: string;
+}
+
+export const SwaggerFindWorkoutsHistoryByUserIdDto = () => {
   return function (target: any, key: any, descriptor: any) {
-    ApiOperation({ operationId: 'findAllSessionByUserId' })(target, key, descriptor);
+    ApiOperation({ operationId: 'findWorkoutsHistoryByUserId' })(target, key, descriptor);
     ApiBearerAuth()(target, key, descriptor);
-    ApiPaginatedResponse(FindAllByUserIdDto)(target, key, descriptor);
+    ApiPaginatedResponse(FindWorkoutsHistoryByUserIdResponseDto)(target, key, descriptor);
     ApiNotFoundResponse({
       description: 'Resource not found',
       type: SwaggerResourceNotFoundDto,

@@ -5,6 +5,7 @@ import { Either, left, right } from 'src/core/logic/Either';
 
 import { Encrypter } from '../../cryptography/encrypter';
 import { HashGenerator } from '../../cryptography/hash-generator';
+import { ImageRepository } from '../../repositories/image.repository';
 import { UserRepository } from '../../repositories/user.repository';
 
 type Input = {
@@ -19,6 +20,7 @@ export class AuthorizationUserUseCase {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly hashGenerator: HashGenerator,
+    private readonly imageRepository: ImageRepository,
     private readonly encrypter: Encrypter,
   ) {}
 
@@ -41,11 +43,15 @@ export class AuthorizationUserUseCase {
       return left(new InactiveResourceError());
     }
 
+    const { value: image } = await this.imageRepository.findUserAvatar({ userId: user.id });
+
     const token = await this.encrypter.encrypt({
       sub: user.id.toValue(),
       name: user.name,
       email: user.email,
       role: user.role,
+      avatar: image?.url,
+      blurHash: image?.blurHash,
     });
 
     return right(token);

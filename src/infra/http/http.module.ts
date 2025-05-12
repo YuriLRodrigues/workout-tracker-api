@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { ExerciseUseCasesModule } from '@root/domain/application/use-cases/exercise/exercise.use-cases.module';
 import { ImageUseCasesModule } from '@root/domain/application/use-cases/image/image-use-cases.module';
 import { LogUseCasesModule } from '@root/domain/application/use-cases/log/log.use-cases.module';
@@ -6,6 +7,8 @@ import { SessionUseCasesModule } from '@root/domain/application/use-cases/sessio
 import { WorkoutUseCasesModule } from '@root/domain/application/use-cases/workout/workout.use-cases.module';
 import { UserUseCasesModule } from 'src/domain/application/use-cases/user/user.use-cases.module';
 
+import { DatabaseModule } from '../database/database.module';
+import { PlanActiveGuard } from '../guards/plan.guard';
 import { CreateExerciseController } from './controller/exercise/create.controller';
 import { DeleteExerciseController } from './controller/exercise/delete.controller';
 import { FindAllExercisesByWorkoutIdController } from './controller/exercise/find-all-by-workout-id.controller';
@@ -23,6 +26,7 @@ import { FindAllByUserIdController } from './controller/session/find-all-by-user
 import { FindAverageTimeByWeekController } from './controller/session/find-average-time-by-week.controller';
 import { FindAverageWorkoutByWeekController } from './controller/session/find-average-workout-by-week.controller';
 import { FindFrequencyByWeekAndUserIdController } from './controller/session/find-frequency-by-week-and-user-id.controller';
+import { FindSessionTodayByWorkoutIdAndUserIdController } from './controller/session/find-today-by-workout-id-and-user-id.controller';
 import { FindSessionTodayByWorkoutIdController } from './controller/session/find-today-by-workout-id.controller';
 import { FindTotalLoadByWeekController } from './controller/session/find-total-load-by-week.controller';
 import { FindTotalSeriesByWeekController } from './controller/session/find-total-series-by-week.controller';
@@ -36,6 +40,7 @@ import { CreateWorkoutController } from './controller/workout/create.controller'
 import { DeleteWorkoutController } from './controller/workout/delete.controller';
 import { FindAllWorkoutsByUserIdController } from './controller/workout/find-all-by-user-id.controller';
 import { FindWorkoutByIdController } from './controller/workout/find-by-id.controller';
+import { FindWorkoutsHistoryByUserIdController } from './controller/workout/find-history-by-user-id.controller';
 import { FindTotalAndAvgTimeByUserIdController } from './controller/workout/find-total-and-avg-time-by-user-id.controller';
 import { FindTotalWorkoutsCountByUserIdController } from './controller/workout/find-total-count-by-user-id.controller';
 
@@ -47,6 +52,7 @@ import { FindTotalWorkoutsCountByUserIdController } from './controller/workout/f
     ExerciseUseCasesModule,
     LogUseCasesModule,
     SessionUseCasesModule,
+    DatabaseModule,
   ],
   controllers: [
     // User
@@ -66,6 +72,7 @@ import { FindTotalWorkoutsCountByUserIdController } from './controller/workout/f
     DeleteWorkoutController,
     FindAllWorkoutsByUserIdController,
     FindWorkoutByIdController,
+    FindWorkoutsHistoryByUserIdController,
     FindTotalAndAvgTimeByUserIdController,
     FindTotalWorkoutsCountByUserIdController,
 
@@ -92,6 +99,13 @@ import { FindTotalWorkoutsCountByUserIdController } from './controller/workout/f
     FindTotalSeriesByWeekController,
     FindAllByUserIdController,
     FindFrequencyByWeekAndUserIdController,
+    FindSessionTodayByWorkoutIdAndUserIdController,
   ],
+  // providers: [
+  //   {
+  //     provide: APP_GUARD,
+  //     useClass: PlanActiveGuard,
+  //   },
+  // ],
 })
 export class HttpModule {}

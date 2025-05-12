@@ -7,6 +7,7 @@ import { FindAllWorkoutsByUserIdUseCase } from './find-all-by-user-id.use-case';
 import { FindWorkoutByIdUseCase } from './find-by-id.use-case';
 import { FindTotalAndAvgTimeByUserIdUseCase } from './find-total-and-avg-time-by-user-id.use-case';
 import { FindTotalCountByUserIdUseCase } from './find-total-count-by-user-id.use-case';
+import { FindWorkoutsHistoryByUserIdUseCase } from './find-workouts-history-by-user-id.use-case';
 
 @Module({
   imports: [DatabaseModule],
@@ -17,6 +18,7 @@ import { FindTotalCountByUserIdUseCase } from './find-total-count-by-user-id.use
     FindWorkoutByIdUseCase,
     FindTotalAndAvgTimeByUserIdUseCase,
     FindTotalCountByUserIdUseCase,
+    FindWorkoutsHistoryByUserIdUseCase,
   ],
   exports: [
     CreateWorkoutUseCase,
@@ -25,6 +27,7 @@ import { FindTotalCountByUserIdUseCase } from './find-total-count-by-user-id.use
     FindWorkoutByIdUseCase,
     FindTotalAndAvgTimeByUserIdUseCase,
     FindTotalCountByUserIdUseCase,
+    FindWorkoutsHistoryByUserIdUseCase,
   ],
 })
 export class WorkoutUseCasesModule {}

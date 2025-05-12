@@ -21,6 +21,13 @@ class CreateLogResponseDto {
 }
 
 export class CreateLogBodyDto {
+  @ApiPropertyOptional({
+    description: 'Unique identifier of the session',
+    type: String,
+    nullable: true,
+  })
+  sessionId?: string;
+
   @ApiProperty({
     description: 'Average rest time between sets (in seconds)',
     example: 60,

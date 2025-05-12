@@ -34,7 +34,7 @@ export class CreateLogController {
   async handle(
     @CurrentUser() payload: UserPayload,
     @Param('exerciseId') exerciseId: string,
-    @Body() { averageRestTime, maxRepeat, maxSeries, maxWeight, notes }: CreateLogBodyDto,
+    @Body() { averageRestTime, maxRepeat, maxSeries, maxWeight, notes, sessionId }: CreateLogBodyDto,
   ) {
     const { sub } = payload;
 
@@ -45,6 +45,7 @@ export class CreateLogController {
       maxWeight,
       notes,
       exerciseId: new UniqueEntityId(exerciseId),
+      sessionId: new UniqueEntityId(sessionId),
       userId: new UniqueEntityId(sub),
     });
 

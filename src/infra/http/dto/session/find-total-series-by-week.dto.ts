@@ -31,7 +31,7 @@ export const SwaggerFindTotalSeriesByWeekDto = () => {
     ApiNotFoundResponse({
       description: 'Resource not found',
       type: SwaggerResourceNotFoundDto,
-    });
+    })(target, key, descriptor);
     ApiBadRequestResponse({
       description: 'Bad request',
       type: SwaggerBadRequestDto,

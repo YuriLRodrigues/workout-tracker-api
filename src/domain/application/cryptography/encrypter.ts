@@ -1,3 +1,5 @@
+import { UserPayload } from '@root/infra/auth/auth-user';
+
 export abstract class Encrypter {
-  abstract encrypt(payload: Record<string, string | Array<string>>): Promise<string>;
+  abstract encrypt(payload: UserPayload): Promise<string>;
 }

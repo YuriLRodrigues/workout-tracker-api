@@ -1,4 +1,5 @@
 import { PaginatedResult } from '@root/core/dto/paginated-result';
+import { History } from '@root/domain/enterprise/value-object/history';
 import { Workout } from '@root/domain/enterprise/value-object/workout';
 import { UniqueEntityId } from 'src/core/domain/entity/unique-id.entity';
 import { AsyncMaybe } from 'src/core/logic/Maybe';
@@ -22,6 +23,13 @@ export type FindAllByUserIdProps = {
   limit: number;
 };
 
+export type FindWorkoutsHistoryByUserIdProps = {
+  userId: UniqueEntityId;
+  page: number;
+  limit: number;
+  query?: string;
+};
+
 export type FindTotalCountByUserIdProps = {
   userId: UniqueEntityId;
 };
@@ -38,6 +46,12 @@ export abstract class WorkoutRepository {
   abstract findTotalCountByUserId({
     userId,
   }: FindTotalCountByUserIdProps): AsyncMaybe<{ totalCount: number; since?: Date }>;
+  abstract findWorkoutsHistoryByUserId({
+    userId,
+    limit,
+    page,
+    query,
+  }: FindWorkoutsHistoryByUserIdProps): AsyncMaybe<PaginatedResult<History[]>>;
   abstract findTotalAndAvgTime({
     userId,
   }: FindTotalAndAvgTimeProps): AsyncMaybe<{ totalSeconds: number; avgSeconds: number }>;

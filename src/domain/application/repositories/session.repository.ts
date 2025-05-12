@@ -42,6 +42,11 @@ export type FindFrequencyByWeekAndUserIdProps = {
   userId: UniqueEntityId;
 };
 
+export type FindTodayByWorkoutIdAndUserIdProps = {
+  userId: UniqueEntityId;
+  workoutId: UniqueEntityId;
+};
+
 export abstract class SessionRepository {
   abstract create({ session }: CreateProps): AsyncMaybe<null>;
   abstract findTodayByWorkoutId({ workoutId }: FindByWorkoutIdProps): AsyncMaybe<SessionEntity | null>;
@@ -65,4 +70,8 @@ export abstract class SessionRepository {
   abstract findFrequencyByWeekAndUserId({
     userId,
   }: FindFrequencyByWeekAndUserIdProps): AsyncMaybe<{ frequency: number }>;
+  abstract findTodayByWorkoutIdAndUserId({
+    userId,
+    workoutId,
+  }: FindTodayByWorkoutIdAndUserIdProps): AsyncMaybe<{ id: string } | null>;
 }

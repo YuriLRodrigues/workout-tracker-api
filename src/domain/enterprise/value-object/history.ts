@@ -10,6 +10,8 @@ export type HistoryProps = {
   workoutName: string;
   workoutDescription: string;
   workoutId: UniqueEntityId;
+  totalLoad: number;
+  totalExercises: number;
 };
 
 export class History extends ValueObject<HistoryProps> {
@@ -45,6 +47,14 @@ export class History extends ValueObject<HistoryProps> {
     return this.props.workoutId;
   }
 
+  get totalLoad() {
+    return this.props.totalLoad;
+  }
+
+  get totalExercises() {
+    return this.props.totalExercises;
+  }
+
   static create(props: HistoryProps) {
     return new History({
       id: props.id,
@@ -55,6 +65,8 @@ export class History extends ValueObject<HistoryProps> {
       workoutName: props.workoutName,
       workoutId: props.workoutId,
       workoutDescription: props.workoutDescription,
+      totalExercises: props.totalExercises,
+      totalLoad: props.totalLoad,
     });
   }
 }

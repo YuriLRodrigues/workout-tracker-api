@@ -16,6 +16,13 @@ export class LogMapper {
           id: data.exerciseId.toValue(),
         },
       },
+      session: data?.sessionId
+        ? {
+            connect: {
+              id: data.sessionId.toValue(),
+            },
+          }
+        : undefined,
       user: {
         connect: {
           id: data.userId.toValue(),

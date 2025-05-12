@@ -7,6 +7,7 @@ export const tokenPayloadSchema = z.object({
   blurHash: z.string().optional(),
   name: z.string(),
   email: z.string().email(),
+  planExpiresAt: z.string().optional(),
 });
 
 export type UserPayload = z.infer<typeof tokenPayloadSchema>;

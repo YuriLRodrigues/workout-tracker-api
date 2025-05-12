@@ -19,6 +19,7 @@ type Input = {
   notes?: string;
   exerciseId: UniqueEntityId;
   userId: UniqueEntityId;
+  sessionId?: UniqueEntityId;
 };
 
 @Injectable()
@@ -31,6 +32,7 @@ export class CreateLogUseCase {
 
   async execute({
     exerciseId,
+    sessionId,
     userId,
     averageRestTime,
     maxRepeat,
@@ -50,6 +52,7 @@ export class CreateLogUseCase {
       maxWeight,
       notes,
       userId,
+      sessionId,
     });
 
     await this.logRepository.create({ log });

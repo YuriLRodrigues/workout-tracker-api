@@ -9,6 +9,7 @@ import {
   FindByIdProps,
   FindByWorkoutIdProps,
   FindFrequencyByWeekAndUserIdProps,
+  FindTodayByWorkoutIdAndUserIdProps,
   FindTotalLoadByWeekProps,
   FindTotalSeriesByWeekProps,
   SessionRepository,
@@ -121,6 +122,8 @@ export class PrismaSessionRepository implements SessionRepository {
         workoutName: session.workout.name,
         workoutId: new UniqueEntityId(session.workout.id),
         workoutDescription: session.workout.description,
+        totalExercises: 0,
+        totalLoad: 0,
       });
     });
 
@@ -319,5 +322,30 @@ export class PrismaSessionRepository implements SessionRepository {
     const frequency = sessions.length / weeks;
 
     return Maybe.some({ frequency: parseFloat(frequency.toFixed(2)) });
+  }
+
+  async findTodayByWorkoutIdAndUserId({
+    userId,
+    workoutId,
+  }: FindTodayByWorkoutIdAndUserIdProps): AsyncMaybe<{ id: string } | null> {
+    const { end, start } = getBrasilDayRange();
+
+    const session = await this.prismaService.session.findFirst({
+      where: {
+        userId: userId.toValue(),
+        workoutId: workoutId.toValue(),
+        startTime: {
+          gte: start,
+          lte: end,
+        },
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    if (!session) return Maybe.none();
+
+    return Maybe.some({ id: session.id });
   }
 }

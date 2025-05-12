@@ -9,9 +9,11 @@ import {
   FindByIdProps,
   FindTotalAndAvgTimeProps,
   FindTotalCountByUserIdProps,
+  FindWorkoutsHistoryByUserIdProps,
   WorkoutRepository,
 } from '@root/domain/application/repositories/workout.repository';
 import { WorkoutEntity } from '@root/domain/enterprise/entities/workout.entity';
+import { History } from '@root/domain/enterprise/value-object/history';
 import { Workout } from '@root/domain/enterprise/value-object/workout';
 
 import { WorkoutMapper } from '../mappers/workout.mapper';
@@ -134,7 +136,7 @@ export class PrismaWorkoutRepository implements WorkoutRepository {
             },
           }),
           this.prismaService.exercise.aggregate({
-            where: { workoutId: userWorkout.id },
+            where: { workoutId: userWorkout.id, executionType: 'REPETITION' },
             _sum: { targetRepetitions: true, targetSets: true },
           }),
         ]);
@@ -159,6 +161,81 @@ export class PrismaWorkoutRepository implements WorkoutRepository {
 
     return Maybe.some({
       data: mappedWorkouts,
+      meta: {
+        page,
+        perPage: limit,
+        totalCount,
+        totalPages: Math.ceil(totalCount / limit),
+      },
+    });
+  }
+
+  async findWorkoutsHistoryByUserId({
+    userId,
+    limit,
+    page,
+    query,
+  }: FindWorkoutsHistoryByUserIdProps): AsyncMaybe<PaginatedResult<History[]>> {
+    const [sessionsByUser, totalCount] = await this.prismaService.$transaction([
+      this.prismaService.session.findMany({
+        where: { userId: userId.toValue(), workoutId: query ? query : undefined },
+        select: { id: true },
+        skip: (page - 1) * limit,
+        take: limit,
+        orderBy: { startTime: 'desc' },
+      }),
+      this.prismaService.session.count({
+        where: { userId: userId.toValue() },
+      }),
+    ]);
+
+    const mappedHistories = await Promise.all(
+      sessionsByUser.map(async (session) => {
+        const [sessionData, logsAggregation, totalExercises] = await this.prismaService.$transaction([
+          this.prismaService.session.findUnique({
+            where: { id: session.id },
+            select: {
+              id: true,
+              startTime: true,
+              endTime: true,
+              workout: {
+                select: {
+                  id: true,
+                  name: true,
+                  description: true,
+                  color: true,
+                  icon: true,
+                },
+              },
+            },
+          }),
+          this.prismaService.log.aggregate({
+            where: { sessionId: session.id },
+            _sum: { maxWeight: true },
+          }),
+          this.prismaService.log.aggregate({
+            where: { sessionId: session.id },
+            _count: { exerciseId: true },
+          }),
+        ]);
+
+        return History.create({
+          id: new UniqueEntityId(sessionData.id),
+          workoutId: new UniqueEntityId(sessionData.workout.id),
+          startTime: sessionData.startTime,
+          endTime: sessionData.endTime,
+          color: sessionData.workout.color,
+          icon: sessionData.workout.icon,
+          workoutName: sessionData.workout.name,
+          workoutDescription: sessionData.workout.description,
+          totalLoad: logsAggregation._sum.maxWeight || 0,
+          totalExercises: totalExercises._count.exerciseId || 0,
+        });
+      }),
+    );
+
+    return Maybe.some({
+      data: mappedHistories,
       meta: {
         page,
         perPage: limit,
@@ -226,7 +303,7 @@ export class PrismaWorkoutRepository implements WorkoutRepository {
 
     return Maybe.some({
       totalCount,
-      since: since.startTime ?? null,
+      since: since?.startTime ?? null,
     });
   }
 }

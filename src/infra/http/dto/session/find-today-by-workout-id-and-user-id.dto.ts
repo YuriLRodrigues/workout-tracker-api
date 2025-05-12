@@ -8,22 +8,21 @@ import {
 } from '@nestjs/swagger';
 
 import { SwaggerBadRequestDto, SwaggerResourceNotFoundDto } from '../swagger.dto';
-import { SessionDto } from './sesison.dto';
 
-export class FindTodayWorkoutSessionResponseDto {
+export class FindSessionTodayByUserIdResponseDto {
   @ApiProperty({
-    description: 'Data found or not of the today session',
-    example: '2025-01-03',
+    description: 'Unique identifier of the session',
+    type: String,
     nullable: true,
   })
-  data: SessionDto | null;
+  id: string | null;
 }
 
-export const SwaggerFindTodayWorkoutSessionDto = () => {
+export const SwaggerFindSessionTodayByUserIdDto = () => {
   return function (target: any, key: any, descriptor: any) {
-    ApiOperation({ operationId: 'findTodayWorkoutSession' })(target, key, descriptor);
+    ApiOperation({ operationId: 'findTodaySessionByUserId' })(target, key, descriptor);
     ApiBearerAuth()(target, key, descriptor);
-    ApiOkResponse({ type: FindTodayWorkoutSessionResponseDto, description: 'Session found or not' })(
+    ApiOkResponse({ type: FindSessionTodayByUserIdResponseDto, description: 'Today session found' })(
       target,
       key,
       descriptor,

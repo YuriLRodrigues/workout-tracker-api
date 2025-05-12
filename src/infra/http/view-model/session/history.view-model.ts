@@ -11,6 +11,8 @@ export class HistoryViewModel {
       workoutName: data.workoutName,
       workoutDescription: data.workoutDescription,
       workoutId: data.workoutId.toValue(),
+      totalLoad: data.totalLoad,
+      totalExercises: data.totalExercises,
     };
   }
 }
