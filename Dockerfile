@@ -10,6 +10,9 @@ RUN pnpm install
 FROM node:21-alpine AS build
 WORKDIR /app
 
+# Ativa o corepack e instala o pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
 COPY --from=dependencies /app/node_modules ./node_modules
 COPY prisma ./prisma/
 COPY . .
