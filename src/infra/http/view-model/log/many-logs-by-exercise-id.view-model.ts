@@ -1,12 +1,13 @@
-import { LogEntity } from '@root/domain/enterprise/entities/log.entity';
+import { Logs } from '@root/domain/enterprise/value-object/logs';
 
-export class LogViewModel {
-  static toHttp(data: LogEntity) {
+export class ManyLogsByExerciseIdViewModel {
+  static toHttp(data: Logs) {
     return {
       id: data.id.toValue(),
       maxSeries: data.maxSeries,
       maxWeight: data.maxWeight,
       maxRepeat: data.maxRepeat,
+      exerciseExecutionType: data.exerciseExecutionType,
       averageRestTime: data.averageRestTime,
       effortLevel: data.effortLevel,
       notes: data.notes || undefined,

@@ -60,6 +60,14 @@ export class CreateLogBodyDto {
   @IsNumber()
   maxWeight: number;
 
+  @ApiProperty({
+    description: 'Indicates the perceived level of effort during the workout.',
+    example: 10,
+  })
+  @IsNotEmpty()
+  @IsNumber()
+  effortLevel: number;
+
   @ApiPropertyOptional({
     description: 'Optional notes or observations about the log',
     example: 'Focus on keeping proper form throughout the sets.',

@@ -27,6 +27,14 @@ export class LogDto {
   maxWeight: number;
 
   @ApiProperty({
+    description: 'Indicates the perceived level of effort during the workout.',
+    example: 10,
+  })
+  @IsNotEmpty()
+  @IsNumber()
+  effortLevel: number;
+
+  @ApiProperty({
     description: 'Maximum number of repetitions achieved in a single set',
     example: 15,
   })

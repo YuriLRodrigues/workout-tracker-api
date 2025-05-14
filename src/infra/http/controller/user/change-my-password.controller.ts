@@ -1,16 +1,17 @@
 import {
   BadRequestException,
   Body,
+  ConflictException,
   Controller,
   HttpStatus,
   MethodNotAllowedException,
   NotFoundException,
-  Param,
-  Post,
+  Patch,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { NotAllowedError } from '@root/core/errors/not-allowed-error';
-import { CreateLogUseCase } from '@root/domain/application/use-cases/log/create.use-case';
+import { ResourceAlreadyExistsError } from '@root/core/errors/resource-already-exists-error';
+import { ChangeMyUserPasswordUseCase } from '@root/domain/application/use-cases/user/change-my-password';
 import { UniqueEntityId } from 'src/core/domain/entity/unique-id.entity';
 import { ResourceNotFoundError } from 'src/core/errors/resource-not-found-error';
 import { UserRole } from 'src/domain/enterprise/types/user';
@@ -18,40 +19,30 @@ import { UserPayload } from 'src/infra/auth/auth-user';
 import { CurrentUser } from 'src/infra/auth/current-user';
 import { Roles } from 'src/infra/auth/roles';
 
-import { CreateLogBodyDto, SwaggerCreateLogDto } from '../../dto/log/create.dto';
+import { ChangeMyUserPasswordBodyDto, SwaggerChangeMyUserPasswordDto } from '../../dto/user/change-my-password.dto';
 
-@ApiTags('Log')
-@Controller('log')
-export class CreateLogController {
-  constructor(private readonly createLogUseCase: CreateLogUseCase) {}
+@ApiTags('User')
+@Controller('user')
+export class ChangeMyUserPasswordController {
+  constructor(private readonly changeMyUserPasswordUseCase: ChangeMyUserPasswordUseCase) {}
 
-  @SwaggerCreateLogDto()
+  @SwaggerChangeMyUserPasswordDto()
   @Roles({
     roles: [UserRole.USER, UserRole.MANAGER, UserRole.PERSONAL],
     isAll: false,
   })
-  @Post('/:exerciseId')
-  async handle(
-    @CurrentUser() payload: UserPayload,
-    @Param('exerciseId') exerciseId: string,
-    @Body() { averageRestTime, maxRepeat, maxSeries, maxWeight, notes, sessionId, effortLevel }: CreateLogBodyDto,
-  ) {
+  @Patch('/change-password')
+  async handle(@CurrentUser() payload: UserPayload, @Body() { newPassword, oldPassword }: ChangeMyUserPasswordBodyDto) {
     const { sub } = payload;
 
-    const log = await this.createLogUseCase.execute({
-      averageRestTime,
-      maxRepeat,
-      maxSeries,
-      maxWeight,
-      effortLevel,
-      notes,
-      exerciseId: new UniqueEntityId(exerciseId),
-      sessionId: new UniqueEntityId(sessionId),
+    const user = await this.changeMyUserPasswordUseCase.execute({
       userId: new UniqueEntityId(sub),
+      newPassword,
+      oldPassword,
     });
 
-    if (log.isLeft()) {
-      const error = log.value;
+    if (user.isLeft()) {
+      const error = user.value;
 
       switch (error.constructor) {
         case ResourceNotFoundError:
@@ -64,6 +55,11 @@ export class CreateLogController {
             statusCode: HttpStatus.METHOD_NOT_ALLOWED,
             error: error.message,
           });
+        case ResourceAlreadyExistsError:
+          throw new ConflictException({
+            statusCode: HttpStatus.CONFLICT,
+            error: error.message,
+          });
         default:
           throw new BadRequestException({
             statusCode: HttpStatus.BAD_REQUEST,
@@ -73,7 +69,7 @@ export class CreateLogController {
     }
 
     return {
-      message: 'Log created successfully',
+      message: 'Password successfully modified',
     };
   }
 }

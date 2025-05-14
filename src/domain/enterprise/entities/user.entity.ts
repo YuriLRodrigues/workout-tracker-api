@@ -52,6 +52,10 @@ export class UserEntity extends Entity<UserEntityProps> {
     return this.props.password;
   }
 
+  set password(password: string) {
+    this.props.password = password;
+  }
+
   get phone() {
     return this.props.phone;
   }

@@ -210,7 +210,7 @@ export class PrismaWorkoutRepository implements WorkoutRepository {
             },
           }),
           this.prismaService.log.aggregate({
-            where: { sessionId: session.id },
+            where: { sessionId: session.id, exercise: { executionType: 'REPETITION' } },
             _sum: { maxWeight: true },
           }),
           this.prismaService.log.aggregate({

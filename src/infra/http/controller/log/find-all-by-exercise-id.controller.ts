@@ -10,7 +10,7 @@ import { Roles } from 'src/infra/auth/roles';
 
 import { SwaggerFindAllLogsByExerciseIdDto } from '../../dto/log/find-all-by-exercise-id.dto';
 import { PaginationDto } from '../../dto/pagination.dto';
-import { LogViewModel } from '../../view-model/log/log.view-model';
+import { ManyLogsByExerciseIdViewModel } from '../../view-model/log/many-logs-by-exercise-id.view-model';
 
 @ApiTags('Log')
 @Controller('log')
@@ -56,7 +56,7 @@ export class FindAllLogsByExerciseIdController {
 
     return {
       meta: logs.value.meta,
-      results: logs.value.data.map(LogViewModel.toHttp),
+      results: logs.value.data.map(ManyLogsByExerciseIdViewModel.toHttp),
     };
   }
 }

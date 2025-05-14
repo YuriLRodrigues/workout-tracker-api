@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { UniqueEntityId } from '@root/core/domain/entity/unique-id.entity';
 import { PaginatedResult } from '@root/core/dto/paginated-result';
 import { AsyncMaybe, Maybe } from '@root/core/logic/Maybe';
 import {
@@ -11,6 +12,8 @@ import {
   LogRepository,
 } from '@root/domain/application/repositories/log.repository';
 import { LogEntity } from '@root/domain/enterprise/entities/log.entity';
+import { ExecutionType } from '@root/domain/enterprise/types/exercise';
+import { Logs } from '@root/domain/enterprise/value-object/logs';
 import { getBrasilUTCDate } from '@root/utils/get-brasil-utc-date';
 import { endOfDay, startOfDay } from 'date-fns';
 
@@ -58,12 +61,19 @@ export class PrismaLogRepository implements LogRepository {
     userId,
     limit,
     page,
-  }: FindAllByExerciseIdProps): AsyncMaybe<PaginatedResult<LogEntity[]>> {
+  }: FindAllByExerciseIdProps): AsyncMaybe<PaginatedResult<Logs[]>> {
     const [logs, totalCount] = await this.prismaService.$transaction([
       this.prismaService.log.findMany({
         where: {
           exerciseId: exerciseId.toValue(),
           userId: userId.toValue(),
+        },
+        include: {
+          exercise: {
+            select: {
+              executionType: true,
+            },
+          },
         },
         skip: (page - 1) * limit,
         take: limit,
@@ -79,7 +89,22 @@ export class PrismaLogRepository implements LogRepository {
       }),
     ]);
 
-    const mappedLogs = logs.map(LogMapper.toDomain);
+    const mappedLogs = logs.map((log) =>
+      Logs.create({
+        averageRestTime: log.averageRestTime,
+        createdAt: log.createdAt,
+        exerciseExecutionType: log.exercise.executionType as ExecutionType,
+        exerciseId: new UniqueEntityId(log.exerciseId),
+        maxRepeat: log.maxRepeat,
+        id: new UniqueEntityId(log.id),
+        maxSeries: log.maxSeries,
+        effortLevel: log.effortLevel,
+        maxWeight: log.maxWeight,
+        userId: new UniqueEntityId(log.userId),
+        notes: log.notes,
+        sessionId: new UniqueEntityId(log.sessionId),
+      }),
+    );
 
     return Maybe.some({
       data: mappedLogs,

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PaginatedResult } from '@root/core/dto/paginated-result';
 import { NotAllowedError } from '@root/core/errors/not-allowed-error';
-import { LogEntity } from '@root/domain/enterprise/entities/log.entity';
+import { Logs } from '@root/domain/enterprise/value-object/logs';
 import { UniqueEntityId } from 'src/core/domain/entity/unique-id.entity';
 import { ResourceNotFoundError } from 'src/core/errors/resource-not-found-error';
 import { Either, left, right } from 'src/core/logic/Either';
@@ -9,7 +9,7 @@ import { Either, left, right } from 'src/core/logic/Either';
 import { LogRepository } from '../../repositories/log.repository';
 import { UserRepository } from '../../repositories/user.repository';
 
-type Output = Either<ResourceNotFoundError | NotAllowedError, PaginatedResult<LogEntity[]>>;
+type Output = Either<ResourceNotFoundError | NotAllowedError, PaginatedResult<Logs[]>>;
 
 type Input = {
   userId: UniqueEntityId;

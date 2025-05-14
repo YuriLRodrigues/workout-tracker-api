@@ -31,7 +31,6 @@ export class SignInController {
 
     if (user.isLeft()) {
       const error = user.value;
-
       switch (error.constructor) {
         case InvalidCredentialsError:
           throw new NotFoundException({

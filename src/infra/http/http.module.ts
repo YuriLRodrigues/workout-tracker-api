@@ -1,14 +1,13 @@
 import { Module } from '@nestjs/common';
-import { APP_GUARD } from '@nestjs/core';
 import { ExerciseUseCasesModule } from '@root/domain/application/use-cases/exercise/exercise.use-cases.module';
 import { ImageUseCasesModule } from '@root/domain/application/use-cases/image/image-use-cases.module';
 import { LogUseCasesModule } from '@root/domain/application/use-cases/log/log.use-cases.module';
+import { PhysicalUseCasesModule } from '@root/domain/application/use-cases/physical/physical.use-cases.module';
 import { SessionUseCasesModule } from '@root/domain/application/use-cases/session/session.use-cases.module';
 import { WorkoutUseCasesModule } from '@root/domain/application/use-cases/workout/workout.use-cases.module';
 import { UserUseCasesModule } from 'src/domain/application/use-cases/user/user.use-cases.module';
 
 import { DatabaseModule } from '../database/database.module';
-import { PlanActiveGuard } from '../guards/plan.guard';
 import { CreateExerciseController } from './controller/exercise/create.controller';
 import { DeleteExerciseController } from './controller/exercise/delete.controller';
 import { FindAllExercisesByWorkoutIdController } from './controller/exercise/find-all-by-workout-id.controller';
@@ -21,6 +20,9 @@ import { DeleteLogController } from './controller/log/delete.controller';
 import { FindAllLogsByExerciseIdController } from './controller/log/find-all-by-exercise-id.controller';
 import { FindAllLogsTodayController } from './controller/log/find-all-logs-today.controller';
 import { FindLogTodayByExerciseIdUseCaseController } from './controller/log/find-today-by-exercise-id.controller';
+import { CreatePhysicalController } from './controller/physical/create.controller';
+import { FindPhysicalStatsByUserIdController } from './controller/physical/find-stats-by-user-id.controller';
+import { UpdatePhysicalController } from './controller/physical/update.controller';
 import { CreateSessionController } from './controller/session/create.controller';
 import { FindAllByUserIdController } from './controller/session/find-all-by-user-id.controller';
 import { FindAverageTimeByWeekController } from './controller/session/find-average-time-by-week.controller';
@@ -31,6 +33,7 @@ import { FindSessionTodayByWorkoutIdController } from './controller/session/find
 import { FindTotalLoadByWeekController } from './controller/session/find-total-load-by-week.controller';
 import { FindTotalSeriesByWeekController } from './controller/session/find-total-series-by-week.controller';
 import { UpdateSessionController } from './controller/session/update.controller';
+import { ChangeMyUserPasswordController } from './controller/user/change-my-password.controller';
 import { DeleteUserController } from './controller/user/delete.controller';
 import { MeController } from './controller/user/me.controller';
 import { SignInController } from './controller/user/sign-in.controller';
@@ -53,6 +56,7 @@ import { FindTotalWorkoutsCountByUserIdController } from './controller/workout/f
     LogUseCasesModule,
     SessionUseCasesModule,
     DatabaseModule,
+    PhysicalUseCasesModule,
   ],
   controllers: [
     // User
@@ -61,6 +65,7 @@ import { FindTotalWorkoutsCountByUserIdController } from './controller/workout/f
     SignInController,
     SignUpController,
     UpdateUserPersonalInfoController,
+    ChangeMyUserPasswordController,
 
     // Image
     UploadImageController,
@@ -100,6 +105,11 @@ import { FindTotalWorkoutsCountByUserIdController } from './controller/workout/f
     FindAllByUserIdController,
     FindFrequencyByWeekAndUserIdController,
     FindSessionTodayByWorkoutIdAndUserIdController,
+
+    //Physical
+    CreatePhysicalController,
+    UpdatePhysicalController,
+    FindPhysicalStatsByUserIdController,
   ],
   // providers: [
   //   {

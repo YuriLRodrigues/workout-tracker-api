@@ -10,6 +10,7 @@ export class LogMapper {
       maxRepeat: data.maxRepeat,
       maxSeries: data.maxSeries,
       maxWeight: data.maxWeight,
+      effortLevel: data.effortLevel,
       notes: data.notes ? data.notes : undefined,
       exercise: {
         connect: {
@@ -39,6 +40,8 @@ export class LogMapper {
         maxRepeat: data.maxRepeat,
         maxSeries: data.maxSeries,
         maxWeight: data.maxWeight,
+        effortLevel: data.effortLevel,
+        sessionId: data.sessionId ? new UniqueEntityId(data.sessionId) : undefined,
         exerciseId: new UniqueEntityId(data.exerciseId),
         notes: data.notes ? data.notes : undefined,
         userId: new UniqueEntityId(data.userId),

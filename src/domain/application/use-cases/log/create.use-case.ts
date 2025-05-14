@@ -16,6 +16,7 @@ type Input = {
   maxRepeat: number;
   maxSeries: number;
   maxWeight: number;
+  effortLevel: number;
   notes?: string;
   exerciseId: UniqueEntityId;
   userId: UniqueEntityId;
@@ -36,6 +37,7 @@ export class CreateLogUseCase {
     userId,
     averageRestTime,
     maxRepeat,
+    effortLevel,
     maxSeries,
     maxWeight,
     notes,
@@ -47,6 +49,7 @@ export class CreateLogUseCase {
     const log = LogEntity.create({
       averageRestTime,
       exerciseId,
+      effortLevel,
       maxRepeat,
       maxSeries,
       maxWeight,

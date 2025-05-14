@@ -7,6 +7,7 @@ export type LogEntityProps = {
   maxSeries: number;
   maxWeight: number;
   maxRepeat: number;
+  effortLevel: number;
   averageRestTime: number;
   notes?: string;
   sessionId?: UniqueEntityId;
@@ -30,6 +31,10 @@ export class LogEntity extends Entity<LogEntityProps> {
 
   get averageRestTime() {
     return this.props.averageRestTime;
+  }
+
+  get effortLevel() {
+    return this.props.effortLevel;
   }
 
   get notes() {
@@ -59,6 +64,7 @@ export class LogEntity extends Entity<LogEntityProps> {
         maxRepeat: props.maxRepeat,
         maxSeries: props.maxSeries,
         maxWeight: props.maxWeight,
+        effortLevel: props.effortLevel,
         notes: props.notes,
         exerciseId: props.exerciseId,
         userId: props.userId,

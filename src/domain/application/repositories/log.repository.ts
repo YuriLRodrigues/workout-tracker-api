@@ -1,5 +1,6 @@
 import { PaginatedResult } from '@root/core/dto/paginated-result';
 import { LogEntity } from '@root/domain/enterprise/entities/log.entity';
+import { Logs } from '@root/domain/enterprise/value-object/logs';
 import { UniqueEntityId } from 'src/core/domain/entity/unique-id.entity';
 import { AsyncMaybe } from 'src/core/logic/Maybe';
 
@@ -40,7 +41,7 @@ export abstract class LogRepository {
     userId,
     limit,
     page,
-  }: FindAllByExerciseIdProps): AsyncMaybe<PaginatedResult<LogEntity[]>>;
+  }: FindAllByExerciseIdProps): AsyncMaybe<PaginatedResult<Logs[]>>;
   abstract findLogTodayByExerciseId({ exerciseId }: FindLogTodayByExerciseIdProps): AsyncMaybe<{ id: string } | null>;
   abstract findAllLogsToday({
     userId,
