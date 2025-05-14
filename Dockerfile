@@ -18,7 +18,7 @@ COPY prisma ./prisma/
 COPY . .
 
 
-RUN apk add --no-cache openssl3 
+RUN apt-get update && apt-get install -y openssl
 
 RUN npx prisma migrate deploy
 RUN npx prisma generate
