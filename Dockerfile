@@ -1,12 +1,12 @@
-FROM node:20-slim AS dependencies
+FROM node:21-alpine AS dependencies
 WORKDIR /app
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-COPY package.json pnpm-lock.yaml ./
+COPY package*.json ./
 RUN pnpm install
 
-FROM node:20-slim AS build
+FROM node:21-alpine AS build
 WORKDIR /app
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
@@ -15,22 +15,20 @@ COPY --from=dependencies /app/node_modules ./node_modules
 COPY prisma ./prisma/
 COPY . .
 
-RUN apt-get update && apt-get install -y openssl
-RUN pnpm prisma generate
+RUN apk add --no-cache openssl3 
+
+ARG VERSION="docker-nidoran"
 RUN pnpm run build
 
-FROM node:20-slim AS server
+FROM node:21-alpine AS server
 WORKDIR /app
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-ENV NODE_ENV=production
-
 COPY --from=build /app/package.json ./
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
-COPY --from=build /app/prisma ./prisma
-
 
 EXPOSE 7777
+
 CMD ["pnpm", "run", "start:prod"]
