@@ -20,8 +20,8 @@ COPY . .
 
 RUN apt-get update && apt-get install -y openssl
 
-RUN npx prisma migrate deploy
-RUN npx prisma generate
+RUN pnpm prisma migrate deploy
+RUN pnpm prisma generate
 
 ARG VERSION="docker-nidoran"
 RUN pnpm run build
