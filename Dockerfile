@@ -1,7 +1,7 @@
 FROM node:21-alpine AS dependencies
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN pnpm install
 
 FROM node:21-alpine AS build
 WORKDIR /app
@@ -11,7 +11,7 @@ COPY . .
 RUN apk add --no-cache openssl3 
 
 ARG VERSION="docker-nidoran"
-RUN npm run build
+RUN pnpm run build
 
 FROM node:21-alpine AS deploy
 WORKDIR /app
@@ -25,4 +25,4 @@ COPY --from=build /app/dist ./dist
 
 EXPOSE 7777
 
-CMD ["npm", "run", "start:prod"]
+CMD ["pnpm", "run", "start:prod"]
