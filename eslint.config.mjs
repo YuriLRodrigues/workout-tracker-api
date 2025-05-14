@@ -1,12 +1,12 @@
-import { FlatCompat } from "@eslint/eslintrc";
-import js from "@eslint/js";
-import typescriptEslintEslintPlugin from "@typescript-eslint/eslint-plugin";
-import tsParser from "@typescript-eslint/parser";
-import importHelpers from "eslint-plugin-import-helpers";
-import { defineConfig, globalIgnores } from "eslint/config";
-import globals from "globals";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { FlatCompat } from '@eslint/eslintrc';
+import js from '@eslint/js';
+import typescriptEslintEslintPlugin from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
+import importHelpers from 'eslint-plugin-import-helpers';
+import { defineConfig, globalIgnores } from 'eslint/config';
+import globals from 'globals';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,21 +17,13 @@ const compat = new FlatCompat({
 });
 
 export default defineConfig([
-  globalIgnores([
-    "**/.eslintrc.js",
-    "**/build",
-    "**/node_modules",
-    "**/package-lock.json",
-  ]),
+  globalIgnores(['**/.eslintrc.js', '**/build', '**/node_modules', '**/package-lock.json']),
   {
-    extends: compat.extends(
-      "plugin:@typescript-eslint/recommended",
-      "plugin:prettier/recommended",
-    ),
+    extends: compat.extends('plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'),
 
     plugins: {
-      "@typescript-eslint": typescriptEslintEslintPlugin,
-      "import-helpers": importHelpers,
+      '@typescript-eslint': typescriptEslintEslintPlugin,
+      'import-helpers': importHelpers,
     },
 
     languageOptions: {
@@ -42,44 +34,36 @@ export default defineConfig([
 
       parser: tsParser,
       ecmaVersion: 5,
-      sourceType: "module",
+      sourceType: 'module',
 
       parserOptions: {
-        project: "tsconfig.json",
+        project: 'tsconfig.json',
       },
     },
 
     rules: {
-      "no-console": "warn",
-      "@typescript-eslint/interface-name-prefix": "off",
-      "@typescript-eslint/explicit-function-return-type": "off",
-      "@typescript-eslint/explicit-module-boundary-types": "off",
-      "@typescript-eslint/no-explicit-any": "off",
+      'no-console': 'warn',
+      '@typescript-eslint/interface-name-prefix': 'off',
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/explicit-module-boundary-types': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
 
-      "@typescript-eslint/no-unused-vars": [
-        "error",
+      '@typescript-eslint/no-unused-vars': [
+        'error',
         {
-          argsIgnorePattern: "^_",
+          argsIgnorePattern: '^_',
         },
       ],
 
-      "import-helpers/order-imports": [
-        "warn",
+      'import-helpers/order-imports': [
+        'warn',
         {
-          newlinesBetween: "always",
+          newlinesBetween: 'always',
 
-          groups: [
-            "module",
-            "/^@core/",
-            "/^@domain/",
-            "/^@infra/",
-            "/^@test/",
-            ["parent", "sibling"],
-            "index",
-          ],
+          groups: ['module', '/^@core/', '/^@domain/', '/^@infra/', '/^@test/', ['parent', 'sibling'], 'index'],
 
           alphabetize: {
-            order: "asc",
+            order: 'asc',
             ignoreCase: true,
           },
         },
