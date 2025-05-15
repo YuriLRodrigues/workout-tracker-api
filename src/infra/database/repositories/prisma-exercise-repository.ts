@@ -134,6 +134,9 @@ export class PrismaExerciseRepository implements ExerciseRepository {
         include: {
           logs: true,
         },
+        orderBy: {
+          createdAt: 'asc',
+        },
       }),
       this.prismaService.exercise.count({
         where: {
