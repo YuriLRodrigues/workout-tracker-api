@@ -10,6 +10,7 @@ import {
   FindTotalAndAvgTimeProps,
   FindTotalCountByUserIdProps,
   FindWorkoutsHistoryByUserIdProps,
+  UpdateProps,
   WorkoutRepository,
 } from '@root/domain/application/repositories/workout.repository';
 import { WorkoutEntity } from '@root/domain/enterprise/entities/workout.entity';
@@ -29,6 +30,19 @@ export class PrismaWorkoutRepository implements WorkoutRepository {
     await this.prismaService.workout.create({ data: raw });
 
     return Maybe.some(workout);
+  }
+
+  async update({ workout }: UpdateProps): AsyncMaybe<void> {
+    const raw = WorkoutMapper.toPersistence(workout);
+
+    await this.prismaService.workout.update({
+      data: raw,
+      where: {
+        id: workout.id.toValue(),
+      },
+    });
+
+    return Maybe.some(null);
   }
 
   async delete({ workoutId }: DeleteProps): AsyncMaybe<void> {

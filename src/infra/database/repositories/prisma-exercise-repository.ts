@@ -8,6 +8,7 @@ import {
   ExerciseRepository,
   FindAllByWorkoutIdProps,
   FindByIdProps,
+  UpdateProps,
 } from '@root/domain/application/repositories/exercise.repository';
 import { ExerciseEntity } from '@root/domain/enterprise/entities/exercise.entity';
 import { ExecutionType, MuscleType } from '@root/domain/enterprise/types/exercise';
@@ -28,6 +29,19 @@ export class PrismaExerciseRepository implements ExerciseRepository {
     });
 
     return Maybe.some(exercise);
+  }
+
+  async update({ exercise }: UpdateProps): AsyncMaybe<void> {
+    const raw = ExerciseMapper.toPersistence(exercise);
+
+    await this.prismaService.exercise.update({
+      data: raw,
+      where: {
+        id: exercise.id.toValue(),
+      },
+    });
+
+    return Maybe.some(null);
   }
 
   async delete({ exerciseId }: DeleteProps): AsyncMaybe<void> {
