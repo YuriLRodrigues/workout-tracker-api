@@ -13,6 +13,13 @@ export type WorkoutEntityProps = {
   updatedAt?: Date;
 };
 
+type EditWorkoutEntityProps = {
+  name?: string;
+  description?: string;
+  icon?: string;
+  color?: string;
+};
+
 export class WorkoutEntity extends Entity<WorkoutEntityProps> {
   get name() {
     return this.props.name;
@@ -59,5 +66,14 @@ export class WorkoutEntity extends Entity<WorkoutEntityProps> {
       },
       id,
     );
+  }
+
+  public update(props: EditWorkoutEntityProps) {
+    this.props.color = props.color ?? this.props.color;
+    this.props.icon = props.icon ?? this.props.icon;
+    this.props.name = props.name ?? this.props.name;
+    this.props.description = props.description ?? this.props.description;
+    this.touch();
+    return this;
   }
 }

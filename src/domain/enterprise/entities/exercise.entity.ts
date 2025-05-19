@@ -21,6 +21,17 @@ export type ExerciseEntityProps = {
   updatedAt?: Date;
 };
 
+type UpdateExerciseEntityProps = {
+  name?: string;
+  description?: string;
+  muscleType?: MuscleType;
+  executionType?: ExecutionType;
+  targetSets?: number;
+  targetResTime?: number;
+  targetRepetitions?: number;
+  videoReference?: string;
+};
+
 export class ExerciseEntity extends Entity<ExerciseEntityProps> {
   get name() {
     return this.props.name;
@@ -101,5 +112,19 @@ export class ExerciseEntity extends Entity<ExerciseEntityProps> {
       },
       id,
     );
+  }
+
+  public update(props: UpdateExerciseEntityProps) {
+    this.props.description = props.description ?? this.props.description;
+    this.props.executionType = props.executionType ?? this.props.executionType;
+    this.props.muscleType = props.muscleType ?? this.props.muscleType;
+    this.props.name = props.name ?? this.props.name;
+    this.props.targetRepetitions = props.targetRepetitions ?? this.props.targetRepetitions;
+    this.props.targetResTime = props.targetResTime ?? this.props.targetResTime;
+    this.props.targetSets = props.targetSets ?? this.props.targetSets;
+    this.props.videoReference = props.videoReference ?? this.props.videoReference;
+    this.touch();
+
+    return this;
   }
 }

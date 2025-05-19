@@ -13,6 +13,10 @@ export type CreateProps = {
   workout: WorkoutEntity;
 };
 
+export type UpdateProps = {
+  workout: WorkoutEntity;
+};
+
 export type DeleteProps = {
   workoutId: UniqueEntityId;
 };
@@ -40,6 +44,7 @@ export type FindTotalAndAvgTimeProps = {
 
 export abstract class WorkoutRepository {
   abstract create({ workout }: CreateProps): AsyncMaybe<WorkoutEntity>;
+  abstract update({ workout }: UpdateProps): AsyncMaybe<void>;
   abstract delete({ workoutId }: DeleteProps): AsyncMaybe<void>;
   abstract findById({ id }: FindByIdProps): AsyncMaybe<Workout | null>;
   abstract findAllByUserId({ userId, limit, page }: FindAllByUserIdProps): AsyncMaybe<PaginatedResult<Workout[]>>;

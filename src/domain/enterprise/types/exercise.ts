@@ -8,6 +8,10 @@ export enum MuscleType {
   CALVES = 'CALVES',
   ABS = 'ABS',
   FULL_BODY = 'FULL_BODY',
+  GLUTES = 'GLUTES',
+  HAMSTRINGS = 'HAMSTRINGS',
+  QUADRICEPS = 'QUADRICEPS',
+  ADDUCTORS_ABDUCTORS = 'ADDUCTORS_ABDUCTORS',
 }
 
 export enum ExecutionType {

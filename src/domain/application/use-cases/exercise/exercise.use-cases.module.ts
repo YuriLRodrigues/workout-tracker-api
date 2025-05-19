@@ -5,6 +5,7 @@ import { CreateExerciseUseCase } from './create.use-case';
 import { DeleteExerciseUseCase } from './delete.use-case';
 import { FindAllExercisesByWorkoutIdUseCase } from './find-all-by-workout-id.use-case';
 import { FindExerciseByIdUseCase } from './find-by-id.use-case';
+import { UpdateExerciseUseCase } from './update.use-case';
 
 @Module({
   imports: [DatabaseModule],
@@ -13,7 +14,14 @@ import { FindExerciseByIdUseCase } from './find-by-id.use-case';
     DeleteExerciseUseCase,
     FindAllExercisesByWorkoutIdUseCase,
     FindExerciseByIdUseCase,
+    UpdateExerciseUseCase,
   ],
-  exports: [CreateExerciseUseCase, DeleteExerciseUseCase, FindAllExercisesByWorkoutIdUseCase, FindExerciseByIdUseCase],
+  exports: [
+    CreateExerciseUseCase,
+    DeleteExerciseUseCase,
+    FindAllExercisesByWorkoutIdUseCase,
+    FindExerciseByIdUseCase,
+    UpdateExerciseUseCase,
+  ],
 })
 export class ExerciseUseCasesModule {}

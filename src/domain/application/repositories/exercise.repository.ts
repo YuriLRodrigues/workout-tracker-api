@@ -12,6 +12,10 @@ export type CreateProps = {
   exercise: ExerciseEntity;
 };
 
+export type UpdateProps = {
+  exercise: ExerciseEntity;
+};
+
 export type DeleteProps = {
   exerciseId: UniqueEntityId;
 };
@@ -25,6 +29,7 @@ export type FindAllByWorkoutIdProps = {
 
 export abstract class ExerciseRepository {
   abstract create({ exercise }: CreateProps): AsyncMaybe<ExerciseEntity>;
+  abstract update({ exercise }: UpdateProps): AsyncMaybe<void>;
   abstract delete({ exerciseId }: DeleteProps): AsyncMaybe<void>;
   abstract findById({ id }: FindByIdProps): AsyncMaybe<Exercise | null>;
   abstract findAllByWorkoutId({
