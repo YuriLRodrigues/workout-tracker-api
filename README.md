@@ -91,13 +91,13 @@ src/
 pnpm install
 ```
 
-# Desenvolvimento
+## 🛠️ Desenvolvimento
 
 ```bash
 pnpm start:dev
 ```
 
-# Produção
+## 🚨 Produção
 
 ```bash
 pnpm start:prod
