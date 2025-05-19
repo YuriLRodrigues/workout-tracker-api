@@ -40,6 +40,10 @@ enum MuscleType {
   CALVES
   ABS
   FULL_BODY
+  GLUTES
+  HAMSTRINGS
+  QUADRICEPS
+  ADDUCTORS_ABDUCTORS
 }
 
 enum ExecutionType {
@@ -177,7 +181,7 @@ model SocialMedia {
 
 model Workout {
   id          String     @id @default(uuid())
-  name        String     @unique
+  name        String
   description String
   icon        String
   color       String
@@ -245,4 +249,20 @@ model Log {
   createdAt       DateTime  @default(now())
 
   @@map("log")
+}
+
+model PasswordResetToken {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationEmailToken {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

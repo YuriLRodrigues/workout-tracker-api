@@ -12,6 +12,7 @@ import { CreateExerciseController } from './controller/exercise/create.controlle
 import { DeleteExerciseController } from './controller/exercise/delete.controller';
 import { FindAllExercisesByWorkoutIdController } from './controller/exercise/find-all-by-workout-id.controller';
 import { FindExerciseByIdController } from './controller/exercise/find-by-id.controller';
+import { UpdateExerciseController } from './controller/exercise/update.controller';
 import { DeleteImageController } from './controller/image/delete.controller';
 import { UpdateImageController } from './controller/image/update.controller';
 import { UploadImageController } from './controller/image/upload.controller';
@@ -35,7 +36,9 @@ import { FindTotalSeriesByWeekController } from './controller/session/find-total
 import { UpdateSessionController } from './controller/session/update.controller';
 import { ChangeMyUserPasswordController } from './controller/user/change-my-password.controller';
 import { DeleteUserController } from './controller/user/delete.controller';
+import { ForgotPasswordController } from './controller/user/forgot-password.controller';
 import { MeController } from './controller/user/me.controller';
+import { NewPasswordController } from './controller/user/new-password.controller';
 import { SignInController } from './controller/user/sign-in.controller';
 import { SignUpController } from './controller/user/sign-up.controller';
 import { UpdateUserPersonalInfoController } from './controller/user/update-personal-info.controller';
@@ -46,6 +49,7 @@ import { FindWorkoutByIdController } from './controller/workout/find-by-id.contr
 import { FindWorkoutsHistoryByUserIdController } from './controller/workout/find-history-by-user-id.controller';
 import { FindTotalAndAvgTimeByUserIdController } from './controller/workout/find-total-and-avg-time-by-user-id.controller';
 import { FindTotalWorkoutsCountByUserIdController } from './controller/workout/find-total-count-by-user-id.controller';
+import { UpdateWorkoutController } from './controller/workout/update.controller';
 
 @Module({
   imports: [
@@ -66,6 +70,8 @@ import { FindTotalWorkoutsCountByUserIdController } from './controller/workout/f
     SignUpController,
     UpdateUserPersonalInfoController,
     ChangeMyUserPasswordController,
+    ForgotPasswordController,
+    NewPasswordController,
 
     // Image
     UploadImageController,
@@ -80,12 +86,14 @@ import { FindTotalWorkoutsCountByUserIdController } from './controller/workout/f
     FindWorkoutsHistoryByUserIdController,
     FindTotalAndAvgTimeByUserIdController,
     FindTotalWorkoutsCountByUserIdController,
+    UpdateWorkoutController,
 
     // Exercise
     CreateExerciseController,
     DeleteExerciseController,
     FindAllExercisesByWorkoutIdController,
     FindExerciseByIdController,
+    UpdateExerciseController,
 
     // Log
     CreateLogController,
