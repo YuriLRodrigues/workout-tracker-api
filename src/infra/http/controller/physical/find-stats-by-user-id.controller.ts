@@ -59,6 +59,6 @@ export class FindPhysicalStatsByUserIdController {
       }
     }
 
-    return { data: physicalStats ? PhysicalViewModel.toHttp(physicalStats.value) : null };
+    return { data: physicalStats.value ? PhysicalViewModel.toHttp(physicalStats.value) : null };
   }
 }

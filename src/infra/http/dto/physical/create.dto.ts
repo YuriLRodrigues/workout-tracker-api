@@ -24,7 +24,6 @@ export class CreatePhysicalBodyDto {
   @ApiProperty({
     example: 175,
     description: 'Height in centimeters',
-    minimum: 30,
   })
   @IsNumber()
   @IsPositive()
@@ -33,7 +32,6 @@ export class CreatePhysicalBodyDto {
   @ApiProperty({
     example: 70,
     description: 'Weight in kilograms',
-    minimum: 1,
   })
   @IsNumber()
   @IsPositive()
@@ -43,7 +41,7 @@ export class CreatePhysicalBodyDto {
     example: 25,
     description: 'Age in years',
     minimum: 1,
-    maximum: 120,
+    maximum: 200,
   })
   @IsNumber()
   @Min(1)

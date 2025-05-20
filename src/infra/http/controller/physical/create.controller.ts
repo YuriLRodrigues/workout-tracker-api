@@ -36,7 +36,6 @@ export class CreatePhysicalController {
       muscleMass,
       userId: new UniqueEntityId(sub),
     });
-
     if (physical.isLeft()) {
       const error = physical.value;
 
