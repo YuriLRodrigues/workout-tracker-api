@@ -7,7 +7,7 @@ export class SessionMapper {
     return {
       id: data.id.toValue(),
       startTime: data.startTime,
-      endTime: data.endTime,
+      endTime: data.endTime ?? undefined,
       workout: {
         connect: {
           id: data.workoutId.toValue(),
@@ -27,7 +27,7 @@ export class SessionMapper {
         startTime: data.startTime,
         userId: new UniqueEntityId(data.userId),
         workoutId: new UniqueEntityId(data.workoutId),
-        endTime: data.endTime,
+        endTime: data.endTime ?? undefined,
       },
       new UniqueEntityId(data.id),
     );

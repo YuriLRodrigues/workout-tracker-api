@@ -1,3 +1,4 @@
+import { getBrasilUTCDate } from '@root/utils/get-brasil-utc-date';
 import { Entity } from 'src/core/domain/entity/entity';
 import { UniqueEntityId } from 'src/core/domain/entity/unique-id.entity';
 
@@ -32,8 +33,8 @@ export class SessionEntity extends Entity<SessionEntityProps> {
   static create(props: SessionEntityProps, id?: UniqueEntityId) {
     return new SessionEntity(
       {
-        startTime: props.startTime,
-        endTime: props.endTime ?? undefined,
+        startTime: props.startTime ?? getBrasilUTCDate(),
+        endTime: undefined,
         userId: props.userId,
         workoutId: props.workoutId,
       },

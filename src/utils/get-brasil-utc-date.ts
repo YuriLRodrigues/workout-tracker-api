@@ -1,20 +1,13 @@
 import { startOfDay, endOfDay } from 'date-fns';
-import { toZonedTime } from 'date-fns-tz';
 
 export const getBrasilUTCDate = () => {
-  const timeZone = 'America/Sao_Paulo';
-
-  const utcDate = toZonedTime(new Date(), timeZone);
-
-  return utcDate;
+  return new Date();
 };
 
 export const getBrasilDayRange = () => {
-  const timeZone = 'America/Sao_Paulo';
-
   const now = new Date();
-  const start = toZonedTime(startOfDay(now), timeZone);
-  const end = toZonedTime(endOfDay(now), timeZone);
+  const start = startOfDay(now);
+  const end = endOfDay(now);
 
   return { start, end };
 };
