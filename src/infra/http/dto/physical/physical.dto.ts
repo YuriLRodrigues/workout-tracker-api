@@ -1,4 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { getBrasilUTCDate } from '@root/utils/get-brasil-utc-date';
 import { IsDate, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, IsUUID, Min, Max } from 'class-validator';
 
 export class PhysicalDto {
@@ -64,14 +65,14 @@ export class PhysicalDto {
   userId: string;
 
   @ApiProperty({
-    example: new Date().toISOString(),
+    example: getBrasilUTCDate().toISOString(),
     description: 'Record creation timestamp',
   })
   @IsDate()
   createdAt: Date;
 
   @ApiPropertyOptional({
-    example: new Date().toISOString(),
+    example: getBrasilUTCDate().toISOString(),
     description: 'Record last update timestamp',
     nullable: true,
   })

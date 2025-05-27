@@ -1,6 +1,7 @@
 import { Entity } from '@root/core/domain/entity/entity';
 import { UniqueEntityId } from '@root/core/domain/entity/unique-id.entity';
 import { Optional } from '@root/core/logic/Optional';
+import { getBrasilUTCDate } from '@root/utils/get-brasil-utc-date';
 
 export type PasswordResetTokenProps = {
   email: string;
@@ -23,7 +24,7 @@ export class PasswordResetToken extends Entity<PasswordResetTokenProps> {
   }
 
   get updatedAt() {
-    return this.props.updatedAt || new Date();
+    return this.props.updatedAt || getBrasilUTCDate();
   }
 
   static create(props: Optional<PasswordResetTokenProps, 'createdAt' | 'token'>, id?: UniqueEntityId) {
@@ -31,8 +32,8 @@ export class PasswordResetToken extends Entity<PasswordResetTokenProps> {
       {
         email: props.email,
         token: props.token || new UniqueEntityId(),
-        createdAt: props.createdAt || new Date(),
-        updatedAt: props.updatedAt || new Date(),
+        createdAt: props.createdAt || getBrasilUTCDate(),
+        updatedAt: props.updatedAt || getBrasilUTCDate(),
       },
       id,
     );

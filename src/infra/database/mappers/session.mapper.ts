@@ -7,7 +7,7 @@ export class SessionMapper {
     return {
       id: data.id.toValue(),
       startTime: data.startTime,
-      endTime: data.endTime ?? undefined,
+      endTime: data?.endTime ?? undefined,
       workout: {
         connect: {
           id: data.workoutId.toValue(),

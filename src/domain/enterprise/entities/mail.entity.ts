@@ -1,6 +1,7 @@
 import { Entity } from '@root/core/domain/entity/entity';
 import { UniqueEntityId } from '@root/core/domain/entity/unique-id.entity';
 import { Optional } from '@root/core/logic/Optional';
+import { getBrasilUTCDate } from '@root/utils/get-brasil-utc-date';
 
 export enum MailType {
   // VERIFY_EMAIL = 'VERIFY_EMAIL',
@@ -50,7 +51,7 @@ export class MailEntity extends Entity<MailProps> {
         body: props.body,
         type: props.type,
         userId: props.userId || null,
-        createdAt: props.createdAt || new Date(),
+        createdAt: props.createdAt || getBrasilUTCDate(),
       },
       id,
     );

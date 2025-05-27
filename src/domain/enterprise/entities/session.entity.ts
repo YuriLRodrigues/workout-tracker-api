@@ -20,6 +20,7 @@ export class SessionEntity extends Entity<SessionEntityProps> {
 
   set endTime(endTime: Date) {
     this.props.endTime = endTime;
+    return;
   }
 
   get workoutId() {
@@ -34,7 +35,7 @@ export class SessionEntity extends Entity<SessionEntityProps> {
     return new SessionEntity(
       {
         startTime: props.startTime ?? getBrasilUTCDate(),
-        endTime: undefined,
+        endTime: props.endTime ?? undefined,
         userId: props.userId,
         workoutId: props.workoutId,
       },

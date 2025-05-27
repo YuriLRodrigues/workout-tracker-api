@@ -1,5 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable, ForbiddenException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { getBrasilUTCDate } from '@root/utils/get-brasil-utc-date';
 
 import { UserPayload } from '../auth/auth-user';
 import { IS_PUBLIC_KEY } from '../auth/public';
@@ -38,7 +39,7 @@ export class PlanActiveGuard implements CanActivate {
       throw new ForbiddenException('Nenhum plano encontrado');
     }
 
-    if (new Date() > plan.expiresAt) {
+    if (getBrasilUTCDate() > plan.expiresAt) {
       throw new ForbiddenException('Seu plano expirou');
     }
 
